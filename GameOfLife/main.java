@@ -1,3 +1,4 @@
+import java.util.Scanner;
 class Board {
   private int width;
   private int height;
@@ -56,21 +57,60 @@ class Board {
 }
 
 class Main {
+  static char emptyCh = '-';
+  static char occupiedCh ='O';
+  static char toDieCh ='!';
+  static char tobeBornCh = '*';
+  
+  public static int countNeighbors(int x, int y, Board b) {
+    Scanner input = new Scanner(System.in);
+    
+    int count =0;
+    for (int j=y-1; j<=y+1; j++)
+      for (int i=x-1; i<=x+1; i++) {
+        int anint;
+        //System.out.println(i+", "+j);
+        //anint =input.nextInt();
+        if (i<0 || i>=b.getWidth() || j<0 || j>=b.getHeight()){
+          //do nothing
+        } 
+        else { //System.out.println(" Char:"+b.get(i,j)); anint = input.nextInt();
+               if (b.get(i,j)==occupiedCh || 
+                   b.get(i,j) == toDieCh) count++;}
+      }
+      if (b.get(x,y) == occupiedCh || b.get(x,y) == toDieCh) count-- ;
+    
+      return count;
+  } 
+
   public static void main(String[] args) {
-    Board theBoard = new Board(15,10, '-');
-    theBoard.put(4,2,'0');
-    theBoard.put(4,4,'0');
-    theBoard.put(6,3,'0');
-    theBoard.put(7,2,'0');
-    theBoard.put(7,3,'0');
+  
+     
     
+    Board theBoard = new Board(15,11, emptyCh);
+    theBoard.put(5,5,occupiedCh);
+    theBoard.put(6,5,occupiedCh);
+    theBoard.put(7,5,occupiedCh);
+    theBoard.put(8,5,occupiedCh);
+    theBoard.put(9,5,occupiedCh);
+    for (int y = 0; y < theBoard.getHeight(); y++)
+      for (int x =0; x < theBoard.getWidth(); x++) {
+       
+        int c = countNeighbors(x, y, theBoard);
+
+        theBoard.displayBoard();            
+        //System.out.println(x+", "+y+" count:"+c);
+         
+        if ( (c < 2 || c > 3) && theBoard.get(x,y) == occupiedCh)
+             theBoard.put(x,y,toDieCh);
+        
+        if (c == 3 && theBoard.get(x,y) == emptyCh) theBoard.put(x,y,tobeBornCh);
+      }  
+      for (int y = 0; y < theBoard.getHeight(); y++)
+      for (int x =0; x < theBoard.getWidth(); x++) {
+        if (theBoard.get(x,y) == tobeBornCh) theBoard.put(x,y,occupiedCh);
+        if (theBoard.get(x,y) == toDieCh) theBoard.clear(x,y);
+      }
     theBoard.displayBoard();
-    if (theBoard.isOccupied(4,2)) System.out.println("Occupied");
-      else System.out.println("Not Occupied");
-    if (theBoard.isOccupied(4,3)) System.out.println("Occupied");
-      else System.out.println("Not Occupied");
- 
-      
-    
-  }
+  }  
 }
