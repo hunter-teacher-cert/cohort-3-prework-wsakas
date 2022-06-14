@@ -69,33 +69,27 @@ class Main {
     for (int j=y-1; j<=y+1; j++)
       for (int i=x-1; i<=x+1; i++) {
         int anint;
-        //System.out.println(i+", "+j);
-        //anint =input.nextInt();
         if (i<0 || i>=b.getWidth() || j<0 || j>=b.getHeight()){
           //do nothing
         } 
-        else { //System.out.println(" Char:"+b.get(i,j)); anint = input.nextInt();
-               if (b.get(i,j)==occupiedCh || 
-                   b.get(i,j) == toDieCh) count++;}
+        else if (b.get(i,j)==occupiedCh || 
+                   b.get(i,j) == toDieCh) count++;
       }
       if (b.get(x,y) == occupiedCh || b.get(x,y) == toDieCh) count-- ;
-    
       return count;
   } 
 
   public static void main(String[] args) {
-    Board theBoard = new Board(15,11, emptyCh);
-    theBoard.put(6,5,occupiedCh);
-    theBoard.put(7,5,occupiedCh);
-    theBoard.put(8,5,occupiedCh);
+    Board theBoard = new Board(5,5, emptyCh);
+    theBoard.put(1,2,occupiedCh);
+    theBoard.put(2,2,occupiedCh);
+    theBoard.put(3,2,occupiedCh);
      
     for (int iteration=0; iteration<5; iteration++){    
       
       for (int y = 0; y < theBoard.getHeight(); y++)
         for (int x =0; x < theBoard.getWidth(); x++) {
           int c = countNeighbors(x, y, theBoard);
-          //theBoard.displayBoard();            
-          //System.out.println(x+", "+y+" count:"+c);
           if ( (c < 2 || c > 3) && theBoard.get(x,y) == occupiedCh)
                theBoard.put(x,y,toDieCh);
           
