@@ -84,33 +84,29 @@ class Main {
   } 
 
   public static void main(String[] args) {
-  
-     
-    
     Board theBoard = new Board(15,11, emptyCh);
-    theBoard.put(5,5,occupiedCh);
     theBoard.put(6,5,occupiedCh);
     theBoard.put(7,5,occupiedCh);
     theBoard.put(8,5,occupiedCh);
-    theBoard.put(9,5,occupiedCh);
-    for (int y = 0; y < theBoard.getHeight(); y++)
-      for (int x =0; x < theBoard.getWidth(); x++) {
-       
-        int c = countNeighbors(x, y, theBoard);
-
-        theBoard.displayBoard();            
-        //System.out.println(x+", "+y+" count:"+c);
-         
-        if ( (c < 2 || c > 3) && theBoard.get(x,y) == occupiedCh)
-             theBoard.put(x,y,toDieCh);
-        
-        if (c == 3 && theBoard.get(x,y) == emptyCh) theBoard.put(x,y,tobeBornCh);
-      }  
+     
+    for (int iteration=0; iteration<5; iteration++){    
+      
       for (int y = 0; y < theBoard.getHeight(); y++)
-      for (int x =0; x < theBoard.getWidth(); x++) {
-        if (theBoard.get(x,y) == tobeBornCh) theBoard.put(x,y,occupiedCh);
-        if (theBoard.get(x,y) == toDieCh) theBoard.clear(x,y);
-      }
-    theBoard.displayBoard();
-  }  
+        for (int x =0; x < theBoard.getWidth(); x++) {
+          int c = countNeighbors(x, y, theBoard);
+          //theBoard.displayBoard();            
+          //System.out.println(x+", "+y+" count:"+c);
+          if ( (c < 2 || c > 3) && theBoard.get(x,y) == occupiedCh)
+               theBoard.put(x,y,toDieCh);
+          
+          if (c == 3 && theBoard.get(x,y) == emptyCh) theBoard.put(x,y,tobeBornCh);
+        }  
+        for (int y = 0; y < theBoard.getHeight(); y++)
+          for (int x =0; x < theBoard.getWidth(); x++) {
+            if (theBoard.get(x,y) == tobeBornCh) theBoard.put(x,y,occupiedCh);
+            if (theBoard.get(x,y) == toDieCh) theBoard.clear(x,y);
+        }
+        theBoard.displayBoard();  
+    }
+  }   
 }
