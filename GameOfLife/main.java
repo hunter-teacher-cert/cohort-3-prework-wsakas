@@ -1,60 +1,4 @@
 import java.util.Scanner;
-class Board {
-  private int width;
-  private int height;
-  private char[][] grid;
-  private char backgroundCh;
-  
-  public Board(int x, int y, char ch){
-    width = x; height = y;
-    backgroundCh = ch;
-    grid = new char[width][height];
-    for (int i=0; i<height; i++){
-      for (int j=0; j<width; j++){
-        grid[j][i] = backgroundCh;
-      }
-    }
-  } 
-  public int getWidth(){return width;}
-  public int getHeight(){return height;}
-  public char getBackgroundCh(){return backgroundCh;}
-
-  public char get(int x, int y){
-    return grid[x][y];
-  }
-  public void put(int x, int y, char ch){
-    grid[x][y] = ch;
-  }
-  public void clear(int x, int y){
-    grid[x][y] = backgroundCh;
-  }
-  public boolean isEmpty(int x, int y){
-    if (grid[x][y] == backgroundCh)
-      return true;
-    else
-      return false;
-  }
-  public boolean isOccupied(int x, int y){
-    return !isEmpty(x,y);
-  }
-
-  public void clearBoard(){
-    for (int i=0; i<height; i++){
-      for (int j=0; j<width; j++){
-        grid[j][i] = backgroundCh;
-      }
-    }
-  }
-      
-  public void displayBoard(){
-    for (int i=0; i<height; i++){
-      for (int j=0; j<width; j++){
-        System.out.print(grid[j][i]);
-      }
-      System.out.println();
-    }
-  }
-}
 
 class Main {
   static char emptyCh = '-';
@@ -78,14 +22,21 @@ class Main {
       if (b.get(x,y) == occupiedCh || b.get(x,y) == toDieCh) count-- ;
       return count;
   } 
-
+  public static void clearScreen() {  
+    System.out.print("\033[H\033[2J");  
+    System.out.flush();  
+  }
+  
   public static void main(String[] args) {
-    Board theBoard = new Board(5,5, emptyCh);
-    theBoard.put(1,2,occupiedCh);
-    theBoard.put(2,2,occupiedCh);
+    Board theBoard = new Board(30,30, emptyCh);
+    theBoard.put(2,1,occupiedCh);
     theBoard.put(3,2,occupiedCh);
-     
-    for (int iteration=0; iteration<5; iteration++){    
+    theBoard.put(1,3,occupiedCh);
+    theBoard.put(2,3,occupiedCh);
+    theBoard.put(3,3,occupiedCh);
+    theBoard.displayBoard();
+    
+    for (int iteration=0; iteration<50; iteration++){    
       
       for (int y = 0; y < theBoard.getHeight(); y++)
         for (int x =0; x < theBoard.getWidth(); x++) {
@@ -101,6 +52,12 @@ class Main {
             if (theBoard.get(x,y) == toDieCh) theBoard.clear(x,y);
         }
         theBoard.displayBoard();  
+        try {
+          Thread.sleep(500);
+        } catch (InterruptedException e) {e.printStackTrace();}
+        
+        clearScreen();
     }
+   Scanner myChar = new Scanner(System.in); 
   }   
 }
