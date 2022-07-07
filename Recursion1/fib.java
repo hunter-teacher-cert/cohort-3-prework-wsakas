@@ -24,10 +24,10 @@ class Main {
   }
   public static void main(String[] args) {
     int x = 0;
-    x = fib1(40);
+    x = fib1(45);
     System.out.println("fib1: " + x); 
   
-    x = fib2(40);
+    x = fib2(45);
     System.out.println("fib2: " + x); 
   }
 }  
